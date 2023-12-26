@@ -1,6 +1,7 @@
 import cityList from './assets/city.json';
 import { compare, convertArrayToObject } from './utils';
 import { ICity } from './interface';
+import {Country, State} from "./index";
 
 const KEYS = [
 	"name",
@@ -35,6 +36,20 @@ function getCitiesOfState(countryCode: string, stateCode: string): ICity[] {
 	return cities.sort(compare);
 }
 
+// Get a list of cities belonging to a specific state name and country name.
+function getCitiesOfStateByName(countryName: string, stateName: string): ICity[] {
+	if (!stateName) return [];
+	if (!countryName) return [];
+
+	const country = Country.getCountryByName(countryName);
+	if (!country) return [];
+
+	const state = State.getStateByNameAndCountryName(stateName, countryName);
+	if (!state) return [];
+
+	return getCitiesOfState(country.isoCode, state.isoCode);
+}
+
 // Get a list of cities belonging to a specific country.
 function getCitiesOfCountry(countryCode: string): ICity[] | undefined {
 	if (!countryCode) return [];
@@ -59,6 +74,7 @@ function sortByStateAndName(cities: ICity[]): ICity[] {
 export default {
 	getAllCities,
 	getCitiesOfState,
+	getCitiesOfStateByName,
 	getCitiesOfCountry,
 	sortByStateAndName,
 };
