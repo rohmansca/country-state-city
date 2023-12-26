@@ -30,6 +30,16 @@ export const findStateByCodeAndCountryCode = (source: any, code: string, country
 	return undefined;
 };
 
+export const findStateByNameAndCountry = (source: any, name: string, countryCode: string) => {
+	if (name && countryCode && source != null) {
+		const codex = source.findIndex((c: any) => {
+			return c.name === name && c.countryCode === countryCode;
+		});
+		return codex !== -1 ? source[codex] : undefined;
+	}
+	return undefined;
+};
+
 export function defaultKeyToCompare<T extends ICountry | IState | ICity>(entity: T) {
 	return entity.name;
 }

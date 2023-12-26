@@ -248,6 +248,19 @@ const executeAllTests = (State: any) => {
 			);
 			expect(names).toEqual(statesOfCanada);
 		});
+
+		test('Get State By Name and Country Name', () => {
+			const countryName = 'Canada';
+			const stateName = 'Alberta';
+			const state: IState | undefined = State.getStateByNameAndCountryName(stateName, countryName);
+			expect(state).toEqual({
+				"name": "Alberta",
+				"isoCode": "AB",
+				"countryCode": "CA",
+				"latitude": "53.93327060",
+				"longitude": "-116.57650350"
+			});
+		})
 	});
 };
 
