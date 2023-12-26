@@ -1,9 +1,26 @@
 /* eslint-disable no-shadow */
 import { Country, State } from '../index';
 import { IState } from '../interface';
+import {getStatesOfCountryByName} from "../state";
 
 const executeAllTests = (State: any) => {
 	describe('Check for State Module', () => {
+		const statesOfCanada = [
+			'Alberta',
+			'British Columbia',
+			'Manitoba',
+			'New Brunswick',
+			'Newfoundland and Labrador',
+			'Northwest Territories',
+			'Nova Scotia',
+			'Nunavut',
+			'Ontario',
+			'Prince Edward Island',
+			'Quebec',
+			'Saskatchewan',
+			'Yukon',
+		]
+
 		test('Check for Canada States', () => {
 			const code = 'CA';
 			const country: any = Country.getCountryByCode(code);
@@ -13,21 +30,7 @@ const executeAllTests = (State: any) => {
 					return state.name;
 				},
 			);
-			expect(names).toEqual([
-				'Alberta',
-				'British Columbia',
-				'Manitoba',
-				'New Brunswick',
-				'Newfoundland and Labrador',
-				'Northwest Territories',
-				'Nova Scotia',
-				'Nunavut',
-				'Ontario',
-				'Prince Edward Island',
-				'Quebec',
-				'Saskatchewan',
-				'Yukon',
-			]);
+			expect(names).toEqual(statesOfCanada);
 		});
 
 		test('Check All States for United States Of America', () => {
@@ -233,6 +236,17 @@ const executeAllTests = (State: any) => {
 				'Zondoma Province',
 				'Zoundwéogo Province',
 			]);
+		});
+
+		test('Check for Canada States from country name', () => {
+			const country = 'Canada';
+			const states: IState[] = State.getStatesOfCountryByName(country);
+			const names: String[] = states.map(
+				(state: IState): String => {
+					return state.name;
+				},
+			);
+			expect(names).toEqual(statesOfCanada);
 		});
 	});
 };
