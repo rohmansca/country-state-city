@@ -1,6 +1,7 @@
 import stateList from './assets/state.json';
-import { findEntryByCode, findStateByCodeAndCountryCode, compare } from './utils';
-import { IState } from './interface';
+import {findEntryByCode, findStateByCodeAndCountryCode, compare, findStateByNameAndCountry} from './utils';
+import {ICountry, IState} from './interface';
+import {Country} from "./index";
 
 // Get a list of all states.
 export function getAllStates(): IState[] {
@@ -17,11 +18,31 @@ export function getStatesOfCountry(countryCode: string = ''): IState[] {
 	return states.sort(compare);
 }
 
+// Get a list of states belonging to a specific country from country name.
+export function getStatesOfCountryByName(countryName: string = ''): IState[] {
+	if (!countryName) return [];
+
+	const country = Country.getCountryByName(countryName);
+	if (!country) return [];
+
+	return getStatesOfCountry(country.isoCode);
+}
+
 export function getStateByCodeAndCountry(stateCode: string, countryCode: string): IState | undefined {
 	if (!stateCode) return undefined;
 	if (!countryCode) return undefined;
 
 	return findStateByCodeAndCountryCode(stateList, stateCode, countryCode);
+}
+
+export function getStateByNameAndCountryName(stateName: string, countryName: string): IState | undefined {
+	if (!stateName) return undefined;
+	if (!countryName) return undefined;
+
+	const country = Country.getCountryByName(countryName);
+	if (!country) return undefined;
+
+	return findStateByNameAndCountry(stateList, stateName, country.isoCode);
 }
 
 // to be deprecate
@@ -46,7 +67,9 @@ function sortByIsoCode(countries: IState[]): IState[] {
 export default {
 	getAllStates,
 	getStatesOfCountry,
+	getStatesOfCountryByName,
 	getStateByCodeAndCountry,
+	getStateByNameAndCountryName,
 	getStateByCode,
 	sortByIsoCode,
 };

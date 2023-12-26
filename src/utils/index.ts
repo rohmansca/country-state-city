@@ -10,10 +10,30 @@ export const findEntryByCode = (source: any, code: string) => {
 	return undefined;
 };
 
+export const findEntryByName = (source: any, name: string) => {
+	if (name && source != null) {
+		const codex = source.findIndex((c: any) => {
+			return c.name === name;
+		});
+		return codex !== -1 ? source[codex] : undefined;
+	}
+	return undefined;
+};
+
 export const findStateByCodeAndCountryCode = (source: any, code: string, countryCode: string) => {
 	if (code && countryCode && source != null) {
 		const codex = source.findIndex((c: any) => {
 			return c.isoCode === code && c.countryCode === countryCode;
+		});
+		return codex !== -1 ? source[codex] : undefined;
+	}
+	return undefined;
+};
+
+export const findStateByNameAndCountry = (source: any, name: string, countryCode: string) => {
+	if (name && countryCode && source != null) {
+		const codex = source.findIndex((c: any) => {
+			return c.name === name && c.countryCode === countryCode;
 		});
 		return codex !== -1 ? source[codex] : undefined;
 	}
